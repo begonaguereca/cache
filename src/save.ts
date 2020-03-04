@@ -43,6 +43,8 @@ async function run(): Promise<void> {
             return;
         }
         core.debug(`Cache ID: ${cacheId}`);
+
+        // TODO: this will need to be resolvePaths
         const cachePath = utils.resolvePath(
             core.getInput(Inputs.Path, { required: true })
         );
