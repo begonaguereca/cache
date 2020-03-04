@@ -21,8 +21,6 @@ jobs:
     #   fail-fast: false
     runs-on: ubuntu-latest # ${{ matrix.os }}
     steps:
-    - name: Debugging with tmate
-      uses: mxschmitt/action-tmate@v1.0.2
     - name: Checkout
       uses: actions/checkout@v2
     - name: Setup Node.js
@@ -34,6 +32,8 @@ jobs:
       run: |
         echo "::set-output name=dir::$(npm config get cache)"
     - run: npm ci && npm run build
+    - name: Debugging with tmate
+      uses: mxschmitt/action-tmate@v1.0.2
     - name: Restore npm cache
       uses: ./
       with:
