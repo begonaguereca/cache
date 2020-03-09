@@ -22,7 +22,7 @@ jobs:
         path: |
           node_modules
           dist
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('salt.txt') }}
+        key: ${{ runner.os }}-node-${{ hashFiles(/Users/bguereca/1ESLighthouse/PipelineCaching/EthanAzurePipelineAgent/azure-pipelines-agent/_layout/osx-x64/externals') }}-${{ hashFiles('salt.txt') }}
     - run: npm install
       if: steps.cache.outputs.cache-hit != 'true'
     - run: npm run build
