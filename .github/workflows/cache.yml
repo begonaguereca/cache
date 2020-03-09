@@ -22,7 +22,8 @@ jobs:
         path: |
           node_modules
           dist
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('salt.txt') }}
+          ./src/vs
+        key: ${{ runner.os }}-node-${{ hashFiles('yarn') }}-${{ hashFiles('salt.txt') }}
     - run: npm install
       if: steps.cache.outputs.cache-hit != 'true'
     - run: npm run build
