@@ -20,8 +20,6 @@ jobs:
       id: cache
       with:
         path: |
-          node_modules
-          dist
           ./src/vs
         key: ${{ runner.os }}-node-${{ hashFiles('yarn') }}-${{ hashFiles('salt.txt') }}
     - run: npm install
