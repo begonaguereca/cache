@@ -20,8 +20,6 @@ jobs:
       id: cache
       with:
         path: |
-          node_modules
-          dist
           /Users/bguereca/1ESLighthouse/PipelineCaching/EthanAzurePipelineAgent/azure-pipelines-agent/_layout/osx-x64/externals
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('salt.txt') }}
     - run: npm install
