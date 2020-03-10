@@ -22,7 +22,7 @@ jobs:
         path: |
           **/node_modules,!**/node_modules/**/node_modules
           yarn
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('salt.txt') }}
+        key: testFour-${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('salt.txt') }}
     - run: npm install
       if: steps.cache.outputs.cache-hit != 'true'
     - run: npm run build
