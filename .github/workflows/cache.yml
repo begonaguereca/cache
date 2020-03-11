@@ -15,15 +15,15 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
-    - name: JobContext	
-      run: echo ${{ job }}
+    - name: temp	
+      run: echo ${{ temp }}
     - name: Restore npm cache
       uses: ./
       id: cache
       with:
         path: |
-          ${{ job }}/**
-          ${{ job }}
+          ${{ temp }}/**
+          ${{ temp }}
         key: lastTest-${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('salt.txt') }}
     - run: npm install
       if: steps.cache.outputs.cache-hit != 'true'
