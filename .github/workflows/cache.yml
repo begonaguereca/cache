@@ -9,14 +9,14 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-    - name: JobContext
-      run: echo "$JOB_CONTEXT"
     - name: Checkout
       uses: actions/checkout@v2
     - name: Setup Node.js
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
+    - name: JobContext
+      run: echo "$JOB_CONTEXT"
     - name: Restore npm cache
       uses: ./
       id: cache
