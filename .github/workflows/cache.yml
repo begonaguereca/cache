@@ -16,14 +16,14 @@ jobs:
       with:
         node-version: '12.x'
     - name: JobContext	
-      run: echo job
+      run: echo ${{ job }}}
     - name: Restore npm cache
       uses: ./
       id: cache
       with:
         path: |
-          job/**
-          job
+          ${{ job }}}/**
+          ${{ job }}}
         key: lastTest-${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('salt.txt') }}
     - run: npm install
       if: steps.cache.outputs.cache-hit != 'true'
