@@ -1,7 +1,7 @@
 import * as core from "@actions/core";
 import * as io from "@actions/io";
+import * as glob from "@actions/glob";
 import * as fs from "fs";
-import * as os from "os";
 import * as path from "path";
 import * as uuidV4 from "uuid/v4";
 
@@ -28,6 +28,7 @@ export async function createTempDirectory(): Promise<string> {
         }
         tempDirectory = path.join(baseLocation, "actions", "temp");
     }
+
     const dest = path.join(tempDirectory, uuidV4.default());
     await io.mkdirP(dest);
     return dest;
@@ -82,16 +83,21 @@ export function logWarning(message: string): void {
     core.info(`${warningPrefix}${message}`);
 }
 
-export function resolvePath(filePath: string): string {
-    if (filePath[0] === "~") {
-        const home = os.homedir();
-        if (!home) {
-            throw new Error("Unable to resolve `~` to HOME");
-        }
-        return path.join(home, filePath.slice(1));
+export async function resolvePaths(patterns: string[]): Promise<string[]> {
+    const paths: string[] = [];
+    const workspace = process.env["GITHUB_WORKSPACE"] ?? process.cwd();
+    const globber = await glob.create(patterns.join("\n"), {
+        implicitDescendants: false
+    });
+
+    for await (const file of globber.globGenerator()) {
+        const relativeFile = path.relative(workspace, file);
+        core.debug(`Matched: ${relativeFile}`);
+        // Paths are made relative so the tar entries are all relative to the root of the workspace.
+        paths.push(`${relativeFile}`);
     }
 
-    return path.resolve(filePath);
+    return paths;
 }
 
 export function getSupportedEvents(): string[] {
